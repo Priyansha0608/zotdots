@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>ZotDots</title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
-	</head>
-		<body>
-			<p> test </p>
-		</body>
+    <head>
+        <title>What Is Flask</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    </head>
+    <body>
+        <p id="title"> WHAT IS </p>
+        <form action="whatis" method="post">
+            {% for message in get_flashed_messages()%}
+                <p> {{message}} </p>
+            {% endfor %}
+            <br>
+            <input type="text" name="verb_input">
+            <br>
+            <input type="submit" value="Answer Me" id="answerme">
+        </form>
+    </body>
 </html>
