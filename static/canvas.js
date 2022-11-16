@@ -52,11 +52,10 @@ const getCursorPosition = (canvas, event) => {
   }
 
 function getCoordinates(x, y) {
-    
+    const x1 = Math.floor(x/20);
+    const y1 = Math.floor(y/20);
+    console.log(x1, y1);
 }
-
-
-
 
 canvas.addEventListener('mousedown', (e) => {
     const coords = getCursorPosition(canvas, e);
