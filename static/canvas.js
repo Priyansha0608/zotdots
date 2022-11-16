@@ -1,15 +1,11 @@
 
 console.log("canvas.js executed");
 
-
-//var canvas = new fabric.Canvas("c")
 var canvas = document.getElementById("c");
 var ctx = canvas.getContext("2d");
 var width = canvas.width;
 var height = canvas.height;
 
-// ctx.fillStyle = "#FF0000";
-// ctx.fillRect(0, 0, 150, 75);
 
 drawPixel(ctx, 0, 0, 'red');
 draw_grid(ctx, width, height);
@@ -24,16 +20,16 @@ draw_grid(ctx, width, height);
 }*/
 
 function draw_grid(context, width, height){
-    context.lineWidth = 0.5;
+    context.lineWidth = 0.35;
     context.strokeStyle = "slategray"; // a lighter color!!!
-    for (var x = 0; x <= width; x += width/10){
+    for (var x = 0; x <= width; x += width/25){
         context.beginPath();
         context.moveTo(x, 0);
         context.lineTo(x, height);
         context.stroke();
     }
 
-    for (var y = 0; y <= height; y += height/10){
+    for (var y = 0; y <= height; y += height/25){
         context.beginPath();
         context.moveTo(0, y);
         context.lineTo(width, y);
