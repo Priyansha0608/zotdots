@@ -44,13 +44,21 @@ function drawPixel(context, x, y, color) {
 }
 
 const getCursorPosition = (canvas, event) => {
-    const rect = canvas.getBoundingClientRect()
-    const x = event.clientX - rect.left
-    const y = event.clientY - rect.top
-    console.log(x, y)
-    drawPixel(ctx, x, y, 'red');
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    console.log(x, y);
+    return {x, y}; // pixel x, y
   }
 
+function getCoordinates(x, y) {
+    
+}
+
+
+
+
 canvas.addEventListener('mousedown', (e) => {
-    getCursorPosition(canvas, e)
+    const coords = getCursorPosition(canvas, e);
+    getCoordinates(coords.x, coords.y)
 })
