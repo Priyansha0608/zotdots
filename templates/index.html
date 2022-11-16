@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>What Is Flask</title>
+        <title>ZotDots</title>
         <meta charset="UTF-8">
+		<script src="canvas.js"></script> 
+        
         <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
     </head>
     <body>
-        <p id="title"> WHAT IS </p>
+        <p id="title">ZotDots</p>
         <form action="whatis" method="post">
             {% for message in get_flashed_messages()%}
                 <p> {{message}} </p>
@@ -15,6 +17,8 @@
             <input type="text" name="verb_input">
             <br>
             <input type="submit" value="Answer Me" id="answerme">
+            <br>
         </form>
+        <canvas id="c" height="500" width="500" style="border:1px solid #000000;"></canvas>
     </body>
 </html>
