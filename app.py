@@ -9,7 +9,7 @@ app.secret_key = "stupidkey"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///zotdots/database.db'
 db = SQLAlchemy(app)
 
-class Canvas(db.Model):
+class Pixel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     x = db.Column(db.Integer)
     y = db.Column(db.Integer)
@@ -22,6 +22,7 @@ class Canvas(db.Model):
 @app.route("/question")
 def index():
     flash("what are we doing?")
+    initialize_canvas()
     return render_template("index.html") 
 
 def initialize_canvas():
@@ -29,8 +30,8 @@ def initialize_canvas():
     for i in range(10):
         for j in range(10):
             #white, red, orange, yellow, green, blue, purple, pink, black, brown
-            c = Canvas(id = idx, x = i, y = j, color = 'white')
-            db.session.add(c)
+            p = Pixel(id = idx, x = i, y = j, color = 'white')
+            db.session.add(p)
             idx += 1
 
 

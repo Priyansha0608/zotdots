@@ -1,21 +1,22 @@
 body {
-    background-color: slategray;
+    background-color: #1f4690;
     text-align: center;
 }
 
 p {
-    color: white;
-    font-family: cursive;
+    color: #faf1d2;
+    font-family:'Times New Roman', Times, serif;
     font-size: 1.2em;
     margin: 20px;
 }
 
 #title {
     font-size: 5em;
-    margin: 50px;
+    margin: 30px;
+    color: white;
 }
 
-input {
+/* input {
     width: 300px;
     height: 50px;
     margin: 20px;
@@ -24,11 +25,6 @@ input {
     font-family:cursive;
     text-align: center;
     font-size: 1.3em;
-}
-
-input:focus {
-    border: solid 5px mediumvioletred;
-
 }
 
 #answerme {
@@ -40,8 +36,77 @@ input:focus {
 #answerme:hover {
     background-color: mediumvioletred;
     cursor:grabbing;
-}
+} */
+
 
 #c {
-    background-color: rgb(255, 255, 255);
+    background-color: white;
+    outline: #FFA500 10px solid;
 }
+
+
+.color_button {
+    border: none;
+    font-family: 'Times New Roman', Times, serif;
+    width: 70px;
+    height: 70px;
+    font-weight: normal;
+    font-size: 1.3em;
+    background-color: pink;
+    border-radius: 50%;
+}
+
+
+.color_button:hover{
+    font-weight: bold;
+    border-style: outset;
+    outline: white 3px solid; /*change to pretty color*/
+}
+
+.color_button:focus{
+    outline: white 3px solid;
+}
+
+#red_button {
+    background-color: red;
+}
+
+#orange_button {
+    background-color: orange;
+}
+
+#yellow_button {
+    background-color: yellow;
+}
+
+#green_button {
+    background-color: green;
+}
+
+#blue_button {
+    background-color: blue;
+}
+
+#purple_button {
+    background-color: purple;
+}
+
+#brown_button {
+    background-color: #8b4513;
+}
+
+#black_button {
+    background-color: black;
+}
+
+#white_button {
+    background-color: white;
+}
+
+#pink_button {
+    background-color: pink;
+}
+/*
+#faf1d2 cream
+
+*/

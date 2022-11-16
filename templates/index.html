@@ -3,7 +3,7 @@
     <head>
         <title>ZotDots</title>
         <meta charset="UTF-8">
-		<script src="/zotdots/canvas.js"></script> 
+		<!-- <script src="{{url_for('static', filename='canvas.js')}}"></script>  -->
         
         <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
     </head>
@@ -13,12 +13,27 @@
             {% for message in get_flashed_messages()%}
                 <p> {{message}} </p>
             {% endfor %}
-            <br>
+            <!-- <br>
             <input type="text" name="verb_input">
             <br>
             <input type="submit" value="Answer Me" id="answerme">
-            <br>
+            <br> -->
         </form>
-        <canvas id="c" height="500" width="500" style="border:1px solid #000000;"></canvas>
+        <canvas id="c" height="500" width="500"></canvas>
+        <script src="{{url_for('static', filename='canvas.js')}}"></script> 
+		<br>
+        <br>
+        <div>
+            <input type="submit" value="" id="red_button"     class="color_button">
+            <input type="submit" value="" id="orange_button"  class="color_button">
+            <input type="submit" value="" id="yellow_button"  class="color_button">
+            <input type="submit" value="" id="green_button"   class="color_button">
+            <input type="submit" value="" id="blue_button"    class="color_button">
+            <input type="submit" value="" id="purple_button"  class="color_button">
+            <input type="submit" value="" id="brown_button"   class="color_button">
+            <input type="submit" value="" id="black_button"   class="color_button">
+            <input type="submit" value="" id="white_button"   class="color_button">
+        </div>
+
     </body>
 </html>
