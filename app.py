@@ -6,12 +6,11 @@ from sqlalchemy.sql import func
 
 app = Flask(__name__)
 app.secret_key = "stupidkey"
-app.config['SQLALCHEMY_DATABASE_URI'] =\
-    'sqlite:///zotdots/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///zotdots/database.db'
 db = SQLAlchemy(app)
 
 class Canvas(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     x = db.Column(db.Integer)
     y = db.Column(db.Integer)
     color = db.Column(db.Text)
@@ -19,8 +18,6 @@ class Canvas(db.Model):
 
     def __repr__(self):
         return f'<point {self.x, self.y}>'
-
-canvas_array = []
 
 @app.route("/question")
 def index():
@@ -36,8 +33,9 @@ def initialize_canvas():
             db.session.add(c)
             idx += 1
 
+
 @app.route("/whatis", methods=["POST","GET"])
 def answerme():
     flash("Hi, let's do " + str(request.form['verb_input']) + "!")
-    return render_template("index.html") 
+    return render_template("index.html")
 
