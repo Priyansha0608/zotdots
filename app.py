@@ -5,11 +5,13 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 import json
 
+import json
+# initialized = False
 app = Flask(__name__)
 app.secret_key = "stupidkey"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///zotdots/database.db'
 db = SQLAlchemy(app)
-initialized = False
+
 
 
 class Pixel(db.Model):
@@ -21,6 +23,7 @@ class Pixel(db.Model):
 
     def __repr__(self):
         return f'<point {self.x, self.y}>'
+
 
 def initialize_canvas():
     idx = 0
@@ -55,6 +58,7 @@ def test():
     # print(result) # Printing the new dictionary
     # print(type(result))#this shows the json converted as a python dictionary
     # return result
+
 
 @app.route("/", methods=["POST","GET"])
 def index():
