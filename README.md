@@ -28,8 +28,8 @@ Band together with your friends to make your Petr dreams come true!
 ## Contributors ##
 
 The ZotDots team for WebJam 2022
-- Audrey Lam
-- Jason Yang
-- Priyansha Sharma
-- Taylor Quach
+- [Audrey Lam](https://github.com/alam7989)
+- [Jason Yang](https://github.com/Pesra)
+- [Priyansha Sharma](https://github.com/Priyansha0608)
+- [Taylor Quach](https://github.com/taylorq1)
 
