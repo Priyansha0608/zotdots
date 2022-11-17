@@ -1,5 +1,5 @@
 # **ZotDots** #
-![ZotDots Logo](\static\images\ZotDotsLogo01.png)
+![ZotDots Logo]("/static/images/ZotDotsLogo01.png")
 
 1. [Why ZotDots Was Created](#why-zotdots-was-created)
 2. [How ZotDots Works](#how-zotdots-works)
@@ -23,7 +23,7 @@ Compete with other players to be the one to leave your mark!
 
 Band together with your friends to make your Petr dreams come true!
 
-![Petr created in ZotDots](\static\images\ZotDotsPetr.png)
+![Petr created in ZotDots](/static/images/ZotDotsPetr.png)
 
 ## Contributors ##
 

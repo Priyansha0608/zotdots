@@ -3,13 +3,14 @@ from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 
 from sqlalchemy.sql import func
-import json
+from sqlalchemy.sql import update
 
 import json
-# initialized = False
+initialized = False
 app = Flask(__name__)
 app.secret_key = "stupidkey"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///zotdots/database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
@@ -27,11 +28,12 @@ class Pixel(db.Model):
 
 def initialize_canvas():
     idx = 0
-    for i in range(10):
-        for j in range(10):
+    for i in range(50):
+        for j in range(50):
             #white, red, orange, yellow, green, blue, purple, pink, black, brown
             p = Pixel(id = idx, x = i, y = j, color = 'white')
             db.session.add(p)
+            db.session.commit()
             idx += 1
 
 # receive info from canvas.js
@@ -44,25 +46,26 @@ def test():
     print("x: " + x)
     print("y: " + y)
     print("color: " + color)
+
+    updateCanvas(x, y, color)
+
     return [x, y, color]
 
-    # pixelInfo = json.loads(pixelInfo)
-    # print(pixelInfo)
-    # return('/')
+def updateCanvas(x_coord, y_coord, c):
+    print(Pixel.query.all())
+    # pixel = db.query(Pixel).filter_by(x = x_coord, y = y_coord)
+    # pixel.color = c
+    # print(str(pixel))
+    
+    # db.commit()
 
-
-    # output = request.get_json()
-    # print(output) # This is the output that was stored in the JSON within the browser
-    # print(type(output))
-    # result = json.loads(output) #this converts the json output to a python dictionary
-    # print(result) # Printing the new dictionary
-    # print(type(result))#this shows the json converted as a python dictionary
-    # return result
 
 
 @app.route("/", methods=["POST","GET"])
 def index():
+    global initialized
     if not initialized:
         initialize_canvas()
+        initialized = True
     
     return render_template("index.html") 
