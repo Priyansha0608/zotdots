@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 
 from sqlalchemy.sql import func
+import json
 
 import json
 # initialized = False
@@ -23,26 +24,6 @@ class Pixel(db.Model):
     def __repr__(self):
         return f'<point {self.x, self.y}>'
 
-@app.route("/home", methods = ['POST', 'GET'])
-def index():
-    # flash("what are we drawing today?")
-    # if not initialized:
-    #     initialized = True
-    initialize_canvas()
-
-    # x = request.form.get('x', None)
-    # y = request.form.get('y', None)
-    # color = request.form.get('clr', None)
-
-    # print(x, y, color)
-
-    output = request.get_json()
-    print(output) # This is the output that was stored in the JSON within the browser
-    print(type(output))
-    result = json.loads(output) # this converts the json output to a python dictionary
-    print(result) # Printing the new dictionary
-    
-    return render_template("index.html") 
 
 def initialize_canvas():
     idx = 0
@@ -53,9 +34,35 @@ def initialize_canvas():
             db.session.add(p)
             idx += 1
 
+# receive info from canvas.js
+@app.route('/test', methods=['POST'])
+def test():
+    print("in test")
+    x = request.form.get("x")
+    y = request.form.get("y")
+    color = request.form.get("color")
+    print("x: " + x)
+    print("y: " + y)
+    print("color: " + color)
+    return [x, y, color]
 
-#@app.route("/", methods=["POST","GET"])
-#def getName():
-    #pass
-    #flash("Hi, " + str(request.form['verb_input']) + "! Thanks for adding to ZotDots :D")
-    #return render_template("index.html")
+    # pixelInfo = json.loads(pixelInfo)
+    # print(pixelInfo)
+    # return('/')
+
+
+    # output = request.get_json()
+    # print(output) # This is the output that was stored in the JSON within the browser
+    # print(type(output))
+    # result = json.loads(output) #this converts the json output to a python dictionary
+    # print(result) # Printing the new dictionary
+    # print(type(result))#this shows the json converted as a python dictionary
+    # return result
+
+
+@app.route("/", methods=["POST","GET"])
+def index():
+    if not initialized:
+        initialize_canvas()
+    
+    return render_template("index.html") 

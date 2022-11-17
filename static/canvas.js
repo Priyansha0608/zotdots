@@ -6,19 +6,13 @@ var ctx = canvas.getContext("2d");
 var width = canvas.width;
 var height = canvas.height;
 var color = null;
+var x;
+var y;
 
 var box_width = 20; // one box has width and height 20px
 
 draw_grid(ctx, width, height);
 
-/*window.onload = function() {
-    var canvas = document.getElementById("c") //new fabric.Canvas("c")
-    window.canvas = canvas
-    var context = canvas.getContext('2d');
-    drawPixel(context, 20, 10, 'red'); // x=20 y=10
-
-    canvas.renderAll()
-}*/
 
 function draw_grid(context, width, height){
     context.lineWidth = 0.35;
@@ -60,11 +54,15 @@ const getCursorPosition = (canvas, event) => {
 function getCoordinates(x, y) {
     const x1 = Math.floor(x/box_width);
     const y1 = Math.floor(y/box_width);
-    console.log(x1, y1);
+    // console.log(x1, y1);
     return {x1, y1}
 }
 
+function changeColor(c) {
+    color = c;
+}
 
+// draw a pixel in the correct box when mouse is clicked
 canvas.addEventListener('mousedown', (e) => {
     if (color != null){
         const coords = getCursorPosition(canvas, e);
@@ -90,9 +88,43 @@ canvas.addEventListener('mousedown', (e) => {
         
 
         drawPixel(ctx, box.x1, box.y1, color); // change color value too!!
+
+        x = box.x1;
+        y = box.y1;
+        sendPixelInfo();
+        return {x, y, color}
     }
 })
 
-function changeColor(c) {
-    color = c;
+// send info to app.py
+function sendPixelInfo() {
+    //console.log("in send pixel info\n")
+    const formData = new FormData();
+    //console.log("new formdata created\n")
+    formData.append("x", x)
+    formData.append("y", y)
+    formData.append("color", color)
+    //console.log("info appended to form data\n")
+  
+    const request = new XMLHttpRequest();
+    //console.log("new request created\n")
+    request.open('POST', '/test', true);
+    //console.log("request opened\n")
+    request.send(formData);
+    //console.log("request sent\n")
+
+    // const request = new XMLHttpRequest()
+    // const dict_values = {x, y, color} //Pass the javascript variables to a dictionary.
+    // request.open('POST',   `/test/${JSON.stringify(dict_values)}`)
+    // request.send();
+
+
+    // const json_string = JSON.stringify(dict_values); // Stringify converts a JavaScript object or value to a JSON string
+    // console.log(json_string); // Prints the variables to console window, which are in the JSON format
+    // ajax({
+    //     url:"/test",
+    //     type:"POST",
+    //     contentType: "application/json",
+    //     data: JSON.stringify(json_string)});
+
 }
