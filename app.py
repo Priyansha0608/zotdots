@@ -9,9 +9,11 @@ import json
 initialized = False
 app = Flask(__name__)
 app.secret_key = "stupidkey"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///zotdots/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db' #edited
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+db.init_app(app) # initializes an application for the use with this db setup
+
 
 
 
@@ -20,21 +22,24 @@ class Pixel(db.Model):
     x = db.Column(db.Integer)
     y = db.Column(db.Integer)
     color = db.Column(db.Text)
-    updated_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    #updated_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
     def __repr__(self):
-        return f'<point {self.x, self.y}>'
-
+        return f'<point {self.id, self.x, self.y, self.color}>'
 
 def initialize_canvas():
     idx = 0
-    for i in range(50):
-        for j in range(50):
+    for i in range(25):
+        for j in range(25):
             #white, red, orange, yellow, green, blue, purple, pink, black, brown
             p = Pixel(id = idx, x = i, y = j, color = 'white')
             db.session.add(p)
             db.session.commit()
             idx += 1
+
+with app.app_context():
+    db.drop_all()
+    db.create_all() # creates a table in the db
 
 # receive info from canvas.js
 @app.route('/test', methods=['POST'])
@@ -52,13 +57,24 @@ def test():
     return [x, y, color]
 
 def updateCanvas(x_coord, y_coord, c):
-    print(Pixel.query.all())
-    # pixel = db.query(Pixel).filter_by(x = x_coord, y = y_coord)
-    # pixel.color = c
-    # print(str(pixel))
+    # print(Pixel.query.all())
+    pixels = Pixel.query.filter_by(x = x_coord, y = y_coord)
     
-    # db.commit()
+    for p in pixels:
+        print(p)
 
+    pixel = pixels[0]
+    pixel.color = c
+    db.session.add(pixel)
+    db.session.commit()
+    
+    pixels = Pixel.query.filter_by(x = x_coord, y = y_coord)
+    
+    for p in pixels:
+        print(p)
+
+# def print_current_db():
+    
 
 
 @app.route("/", methods=["POST","GET"])
@@ -67,5 +83,6 @@ def index():
     if not initialized:
         initialize_canvas()
         initialized = True
+    print_current_db()
     
     return render_template("index.html") 
