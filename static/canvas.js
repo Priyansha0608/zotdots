@@ -68,8 +68,27 @@ function getCoordinates(x, y) {
 canvas.addEventListener('mousedown', (e) => {
     if (color != null){
         const coords = getCursorPosition(canvas, e);
-        
         const box = getCoordinates(coords.x, coords.y);
+
+        // send coords and color to python backend
+        $.post( "/home", {
+            x: box.x1,
+            y: box.y1,
+            clr: color
+        });
+
+        const dict_values = {"Audrey": "Lam"} //Pass the javascript variables to a dictionary.
+        const s = JSON.stringify(dict_values); // Stringify converts a JavaScript object or value to a JSON string
+        console.log(s); // Prints the variables to console window, which are in the JSON format
+        window.alert(s)
+        $.ajax({
+            url:"/test",
+            type:"POST",
+            contentType: "application/json",
+            data: JSON.stringify(s)
+        });
+        
+
         drawPixel(ctx, box.x1, box.y1, color); // change color value too!!
     }
 })

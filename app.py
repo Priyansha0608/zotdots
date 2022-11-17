@@ -4,11 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 
 from sqlalchemy.sql import func
 
+import json
+# initialized = False
 app = Flask(__name__)
 app.secret_key = "stupidkey"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///zotdots/database.db'
 db = SQLAlchemy(app)
-initialized = False
+
 
 
 class Pixel(db.Model):
@@ -21,11 +23,24 @@ class Pixel(db.Model):
     def __repr__(self):
         return f'<point {self.x, self.y}>'
 
-@app.route("/home")
+@app.route("/home", methods = ['POST', 'GET'])
 def index():
-    flash("what are we drawing today?")
-    if not initialized:
-        initialize_canvas()
+    # flash("what are we drawing today?")
+    # if not initialized:
+    #     initialized = True
+    initialize_canvas()
+
+    # x = request.form.get('x', None)
+    # y = request.form.get('y', None)
+    # color = request.form.get('clr', None)
+
+    # print(x, y, color)
+
+    output = request.get_json()
+    print(output) # This is the output that was stored in the JSON within the browser
+    print(type(output))
+    result = json.loads(output) # this converts the json output to a python dictionary
+    print(result) # Printing the new dictionary
     
     return render_template("index.html") 
 
@@ -39,7 +54,8 @@ def initialize_canvas():
             idx += 1
 
 
-@app.route("/", methods=["POST","GET"])
-def getName():
-    flash("Hi, " + str(request.form['name_input']) + "! Thanks for adding to ZotDots :D")
-    return render_template("index.html")
+#@app.route("/", methods=["POST","GET"])
+#def getName():
+    #pass
+    #flash("Hi, " + str(request.form['verb_input']) + "! Thanks for adding to ZotDots :D")
+    #return render_template("index.html")
