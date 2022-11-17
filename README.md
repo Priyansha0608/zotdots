@@ -1,5 +1,5 @@
 # **ZotDots** #
-![ZotDots Logo]("/static/images/ZotDotsLogo01.png")
+![ZotDots Logo](/static/images/ZotDotsLogo00.png)
 
 1. [Why ZotDots Was Created](#why-zotdots-was-created)
 2. [How ZotDots Works](#how-zotdots-works)
