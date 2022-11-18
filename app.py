@@ -1,3 +1,5 @@
+from pdb import post_mortem
+from re import X
 from flask import Flask, render_template, request, flash 
 # flask is main thing, render_template is html, request is for inputs, flash is for outputs
 from flask_sqlalchemy import SQLAlchemy
@@ -43,9 +45,9 @@ with app.app_context():
     db.create_all() # creates a table in the db
 
 # receive info from canvas.js
-@app.route('/test', methods=['POST'])
-def test():
-    print("in test")
+@app.route('/getPixel', methods=['POST'])
+def getPixel():
+    print("in getPixel")
     x = request.form.get("x")
     y = request.form.get("y")
     color = request.form.get("color")
@@ -61,28 +63,20 @@ def updateCanvas(x_coord, y_coord, c):
     # print(Pixel.query.all())
     pixels = Pixel.query.filter_by(x = x_coord, y = y_coord)
     
-    for p in pixels:
-        print(p)
 
 
     pixel = pixels[0]
     pixel.color = c
     db.session.add(pixel)
     db.session.commit()
+
+    for p in pixels:
+        print(p)
     
     pixels = Pixel.query.filter_by(x = x_coord, y = y_coord)
     
-    # for p in pixels:
-    #     print(p)
-    # message = {'greeting':'Hello from Flask!'}
-    # return jsonify(message)
-    
-    # update(Pixel).where(Pixel.x = x_coord,Pixel.y = y_coord).values(color = c)
-    # db.commit()
-    # print('after update:\n')
-    # print(Pixel.query.all())
 
-@app.route('/getdata/<db>', methods=['GET','POST'])
+@app.route('/getDBdata/<db>', methods=['GET','POST'])
 def data_get(db):
     
     # if request.method == 'POST': # POST request
@@ -92,7 +86,7 @@ def data_get(db):
     # else: # GET request
     big_dict = {}
     
-    for entry in Pixel.query.all():
+    for entry in Pixel.query.all(): # key is pixel id, value is dict with x, y, color
         
         small_dict = {}
         small_dict['x'] = entry.x
@@ -101,12 +95,7 @@ def data_get(db):
         big_dict[entry.id] = small_dict
 
     json_obj = json.dumps(big_dict, indent=4)
-    # print(json_obj)
-    
-
-
     return json_obj
-
 
 
 

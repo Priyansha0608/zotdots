@@ -12,6 +12,7 @@ var y;
 var box_width = 20; // one box has width and height 20px
 
 draw_grid(ctx, width, height);
+getDBData();
 
 
 function draw_grid(context, width, height){
@@ -69,20 +70,11 @@ canvas.addEventListener('mousedown', (e) => {
         const box = getCoordinates(coords.x, coords.y);
 
         drawPixel(ctx, box.x1, box.y1, color); // change color value too!!
-        
+        console.log("\npixel drawn\n");
 
         x = box.x1;
         y = box.y1;
         sendPixelInfo();
-
-        var message
-        fetch(`/getdata/${message}`)
-            .then(function (response) {
-                return response.text();
-            }).then(function (text) {
-                console.log('GET response text:');
-                console.log(text); 
-            });
 
         return {x, y, color}
     }
@@ -90,21 +82,41 @@ canvas.addEventListener('mousedown', (e) => {
 
 // send info to app.py
 function sendPixelInfo() {
-    //console.log("in send pixel info\n")
     const formData = new FormData();
-    //console.log("new formdata created\n")
     formData.append("x", x)
     formData.append("y", y)
     formData.append("color", color)
-    //console.log("info appended to form data\n")
   
     const request = new XMLHttpRequest();
-    //console.log("new request created\n")
-    request.open('POST', '/test', true);
-    //console.log("request opened\n")
+    request.open('POST', '/getPixel', true);
     request.send(formData);
-    //console.log("request sent\n")
 }
 
-// send info to db -> update db -> send db info back -> draw pixel
+// refresh/new user joins -> send db info from py to js -> draw entire board
+// draw pixel -> send pixel info from js to to db in py -> update db
+
+function getDBData(){
+    var message;
+    return fetch(`/getDBdata/${message}`)
+        .then(response => response.text())
+        .then((response) => {
+            var db_data = response
+            db_data = JSON.parse(db_data);
+
+            for(var key in db_data){
+                var value = obj[key]; // pixel info
+                drawPixel(ctx, value['x'], value['y'], value['color']);
+    }
+        })
+}
+
+function drawDB(){
+    var db_data = getDBData();
+    db_data = JSON.parse(db_data);
+
+    for(var key in db_data){
+        var value = obj[key];
+        drawPixel(ctx, value['x'], value['y'], value['color']);
+    }
+}
 
