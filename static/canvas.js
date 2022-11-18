@@ -13,6 +13,8 @@ var box_width = 20; // one box has width and height 20px
 
 draw_grid(ctx, width, height);
 getDBData();
+// refresh/new user joins -> send db info from py to js -> draw entire board
+// draw pixel -> send pixel info from js to to db in py -> update db
 
 
 function draw_grid(context, width, height){
@@ -32,11 +34,29 @@ function draw_grid(context, width, height){
         context.stroke();
     }
 }
+
+// draw a pixel in the correct box when mouse is clicked
+canvas.addEventListener('mousedown', (e) => {
+    if (color != null){
+        const coords = getCursorPosition(canvas, e);
+        const box = getCoordinates(coords.x, coords.y);
+
+        drawPixel(ctx, box.x1, box.y1, color); // draw pixel on canvas, but not added to db yet
+        // console.log("\npixel drawn\n");
+
+        x = box.x1;
+        y = box.y1;
+        sendPixelInfo(); // send pixel info to app.p to add to dby
+
+        return {x, y, color}
+    }
+})
+
+// helper functions to draw a pixel in correct box when mouse is clicked
 function drawPixel(context, x, y, color) {
+    // draws pixel in corrext grid
     var roundedX = x * 20;
     var roundedY = y * 20;
-	//var roundedX = Math.round(x);
-    //var roundedY = Math.round(y);
     context.fillStyle = color || '#000';
   	context.fillRect(roundedX, roundedY, 20, 20);
     context.strokeStyle = "slategray";
@@ -44,7 +64,11 @@ function drawPixel(context, x, y, color) {
     context.strokeRect(roundedX, roundedY, 20, 20);
 }
 
-const getCursorPosition = (canvas, event) => {
+function changeColor(c) {
+    color = c;
+}
+
+function getCursorPosition(canvas, event) {
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
@@ -59,28 +83,8 @@ function getCoordinates(x, y) {
     return {x1, y1}
 }
 
-function changeColor(c) {
-    color = c;
-}
 
-// draw a pixel in the correct box when mouse is clicked
-canvas.addEventListener('mousedown', (e) => {
-    if (color != null){
-        const coords = getCursorPosition(canvas, e);
-        const box = getCoordinates(coords.x, coords.y);
-
-        drawPixel(ctx, box.x1, box.y1, color); // change color value too!!
-        console.log("\npixel drawn\n");
-
-        x = box.x1;
-        y = box.y1;
-        sendPixelInfo();
-
-        return {x, y, color}
-    }
-})
-
-// send info to app.py
+// functio to send pixel info to app.py
 function sendPixelInfo() {
     const formData = new FormData();
     formData.append("x", x)
@@ -92,8 +96,7 @@ function sendPixelInfo() {
     request.send(formData);
 }
 
-// refresh/new user joins -> send db info from py to js -> draw entire board
-// draw pixel -> send pixel info from js to to db in py -> update db
+
 
 function getDBData(){
     var message;
@@ -102,21 +105,13 @@ function getDBData(){
         .then((response) => {
             var db_data = response
             db_data = JSON.parse(db_data);
+            console.log('before loop')
 
             for(var key in db_data){
-                var value = obj[key]; // pixel info
+                var value = db_data[key]; // pixel info
+
                 drawPixel(ctx, value['x'], value['y'], value['color']);
-    }
+                // console.log("drew", value['x'], value['y'], value['color']);
+            }
         })
 }
-
-function drawDB(){
-    var db_data = getDBData();
-    db_data = JSON.parse(db_data);
-
-    for(var key in db_data){
-        var value = obj[key];
-        drawPixel(ctx, value['x'], value['y'], value['color']);
-    }
-}
-

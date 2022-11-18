@@ -19,7 +19,6 @@ db.init_app(app) # initializes an application for the use with this db setup
 
 
 
-
 class Pixel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     x = db.Column(db.Integer)
@@ -44,7 +43,19 @@ with app.app_context():
     db.drop_all()
     db.create_all() # creates a table in the db
 
-# receive info from canvas.js
+@app.route("/", methods=["POST","GET"])
+def index():
+    global initialized
+    if not initialized:
+        initialize_canvas()
+        initialized = True
+    
+    
+    return render_template("index.html") 
+
+###########################################################
+
+# receive pixel info from canvas.js
 @app.route('/getPixel', methods=['POST'])
 def getPixel():
     print("in getPixel")
@@ -55,7 +66,7 @@ def getPixel():
     # print("y: " + y)
     # print("color: " + color)
 
-    updateCanvas(x, y, color)
+    updateCanvas(x, y, color) # add pixel info to db
 
     return [x, y, color]
 
@@ -63,17 +74,15 @@ def updateCanvas(x_coord, y_coord, c):
     # print(Pixel.query.all())
     pixels = Pixel.query.filter_by(x = x_coord, y = y_coord)
     
-
-
     pixel = pixels[0]
     pixel.color = c
     db.session.add(pixel)
     db.session.commit()
 
-    for p in pixels:
-        print(p)
+    # for p in pixels:
+        # print(p)
     
-    pixels = Pixel.query.filter_by(x = x_coord, y = y_coord)
+    #pixels = Pixel.query.filter_by(x = x_coord, y = y_coord)
     
 
 @app.route('/getDBdata/<db>', methods=['GET','POST'])
@@ -97,14 +106,3 @@ def data_get(db):
     json_obj = json.dumps(big_dict, indent=4)
     return json_obj
 
-
-
-@app.route("/", methods=["POST","GET"])
-def index():
-    global initialized
-    if not initialized:
-        initialize_canvas()
-        initialized = True
-    
-    
-    return render_template("index.html") 
