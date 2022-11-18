@@ -64,6 +64,7 @@ def updateCanvas(x_coord, y_coord, c):
     for p in pixels:
         print(p)
 
+
     pixel = pixels[0]
     pixel.color = c
     db.session.add(pixel)

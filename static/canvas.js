@@ -105,3 +105,6 @@ function sendPixelInfo() {
     request.send(formData);
     //console.log("request sent\n")
 }
+
+// send info to db -> update db -> send db info back -> draw pixel
+

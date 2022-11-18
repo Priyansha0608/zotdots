@@ -8,10 +8,10 @@
 
 
 ## Why ZotDots Was Created ##
-ZotDots was inspired by r/place to add to the sense of community within UCI and become a "New Beginning" as it starts with a blank canvas and becomes a beautiful artwork!
+ZotDots, inspired by r/place, was designed to add to the sense of community within UCI. Like every "New Beginning," it starts with a blank canvas and with every Anteater's contribution becomes a beautiful artwork!
 
 ## How ZotDots Works ##
-ZotDots utilizes Flask and an SQLAlchemy database to store and update pixels within our canvas.
+ZotDots is a full-stack web application developed using CSS, HTML, and JavaScript for frontend and Flask and SQLAlchemy for backend. SQLAlchemy was used to create a database to store and update pixels within our canvas, so existing drawings on the canvas can be seen by every ZotDot user. 
 
 
 ## How To Play ##
@@ -28,8 +28,8 @@ Band together with your friends to make your Petr dreams come true!
 ## Contributors ##
 
 The ZotDots team for WebJam 2022
-- Audrey Lam
-- Jason Yang
-- Priyansha Sharma
-- Taylor Quach
+- [Audrey Lam](https://github.com/alam7989)
+- [Jason Yang](https://github.com/Pesra)
+- [Priyansha Sharma](https://github.com/Priyansha0608)
+- [Taylor Quach](https://github.com/taylorq1)
 
