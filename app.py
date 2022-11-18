@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from sqlalchemy.sql import func
 from sqlalchemy.sql import update
+from flask import jsonify
 
 import json
 initialized = False
@@ -48,9 +49,9 @@ def test():
     x = request.form.get("x")
     y = request.form.get("y")
     color = request.form.get("color")
-    print("x: " + x)
-    print("y: " + y)
-    print("color: " + color)
+    # print("x: " + x)
+    # print("y: " + y)
+    # print("color: " + color)
 
     updateCanvas(x, y, color)
 
@@ -63,6 +64,7 @@ def updateCanvas(x_coord, y_coord, c):
     for p in pixels:
         print(p)
 
+
     pixel = pixels[0]
     pixel.color = c
     db.session.add(pixel)
@@ -70,11 +72,42 @@ def updateCanvas(x_coord, y_coord, c):
     
     pixels = Pixel.query.filter_by(x = x_coord, y = y_coord)
     
-    for p in pixels:
-        print(p)
-
-# def print_current_db():
+    # for p in pixels:
+    #     print(p)
+    # message = {'greeting':'Hello from Flask!'}
+    # return jsonify(message)
     
+    # update(Pixel).where(Pixel.x = x_coord,Pixel.y = y_coord).values(color = c)
+    # db.commit()
+    # print('after update:\n')
+    # print(Pixel.query.all())
+
+@app.route('/getdata/<db>', methods=['GET','POST'])
+def data_get(db):
+    
+    # if request.method == 'POST': # POST request
+    #     print(request.get_text())  # parse as text
+    #     return 'OK', 200
+    
+    # else: # GET request
+    big_dict = {}
+    
+    for entry in Pixel.query.all():
+        
+        small_dict = {}
+        small_dict['x'] = entry.x
+        small_dict['y'] = entry.y
+        small_dict['color'] = entry.color
+        big_dict[entry.id] = small_dict
+
+    json_obj = json.dumps(big_dict, indent=4)
+    # print(json_obj)
+    
+
+
+    return json_obj
+
+
 
 
 @app.route("/", methods=["POST","GET"])
@@ -83,6 +116,6 @@ def index():
     if not initialized:
         initialize_canvas()
         initialized = True
-    print_current_db()
+    
     
     return render_template("index.html") 

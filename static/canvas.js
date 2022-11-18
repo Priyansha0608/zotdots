@@ -68,12 +68,22 @@ canvas.addEventListener('mousedown', (e) => {
         const coords = getCursorPosition(canvas, e);
         const box = getCoordinates(coords.x, coords.y);
 
+        drawPixel(ctx, box.x1, box.y1, color); // change color value too!!
+        
+
         x = box.x1;
         y = box.y1;
         sendPixelInfo();
 
-        drawPixel(ctx, box.x1, box.y1, color); // change color value too!!
-        
+        var message
+        fetch(`/getdata/${message}`)
+            .then(function (response) {
+                return response.text();
+            }).then(function (text) {
+                console.log('GET response text:');
+                console.log(text); 
+            });
+
         return {x, y, color}
     }
 })
