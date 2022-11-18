@@ -9,17 +9,25 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
     </head>
     <body>
-        <p id="title">ZotDots</p>
-        <form action="whatis" method="post">
+        <div id="container">
+            <div id="logo">
+                <img src="static/images/ZotDotsLogo00.png" width="100px" height="100px">
+            </div>
+            <div  id="title">
+                <p>otDots</p>
+            </div>
+        </div>
+
+        <!-- <form action="whatis" method="post">
             {% for message in get_flashed_messages()%}
                 <p> {{message}} </p>
             {% endfor %}
-            <!-- <br>
+            <br>
             <input type="text" name="verb_input">
             <br>
             <input type="submit" value="Answer Me" id="answerme">
-            <br> -->
-        </form>
+            <br>
+        </form> -->
         <canvas id="c" height="500" width="500"></canvas>
         
         <script src="{{url_for('static', filename='canvas.js')}}"></script> 
@@ -37,6 +45,18 @@
             <input type="submit" value="" id="black_button"   class="color_button" onclick="changeColor('black')">
             <input type="submit" value="" id="white_button"   class="color_button" onclick="changeColor('white')">
             <input type="submit" value="" id="gray_button"    class="color_button" onclick="changeColor('gray')">
+        </div>
+
+        <div id="instructions_container">
+            <div id="instructions">
+                <h2>How to Use ZotDots:</h2>
+                1. select a color below <br>
+                2. click the canvas to color in a square <br>
+                3. reload the page to see other users’ changes <br>
+                <br>
+                You can collaborate with other users to make a masterpiece, or compete with others to overwrite their drawings with your own!
+                Have fun!
+            </div>
         </div>
 
     </body>

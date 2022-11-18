@@ -110,3 +110,23 @@ p {
 #gray_button {
     background-color: gray;
 }
+
+#instructions_container{
+    display: block;
+}
+
+#instructions {
+    font-family:'Times New Roman', Times, serif;
+    color: #faf1d2;
+    text-align: left;
+    margin: auto;
+    width: auto;
+    
+}
+
+#container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+}
