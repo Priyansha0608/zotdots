@@ -13,21 +13,11 @@
             <div id="logo">
                 <img src="static/images/ZotDotsLogo00.png" width="100px" height="100px">
             </div>
-            <div  id="title">
-                <p>otDots</p>
+            <div  >
+                <p id="title">otDots</p>
             </div>
         </div>
 
-        <!-- <form action="whatis" method="post">
-            {% for message in get_flashed_messages()%}
-                <p> {{message}} </p>
-            {% endfor %}
-            <br>
-            <input type="text" name="verb_input">
-            <br>
-            <input type="submit" value="Answer Me" id="answerme">
-            <br>
-        </form> -->
         <canvas id="c" height="500" width="500"></canvas>
         
         <script src="{{url_for('static', filename='canvas.js')}}"></script> 
@@ -50,12 +40,17 @@
         <div id="instructions_container">
             <div id="instructions">
                 <h2>How to Use ZotDots:</h2>
-                1. select a color below <br>
-                2. click the canvas to color in a square <br>
-                3. reload the page to see other users’ changes <br>
+                1. Select a color above <br> <!--Change to below potentially-->
+                2. Click the canvas to color in a square <br>
+                3. Reload the page to see other users’ changes <br>
                 <br>
-                You can collaborate with other users to make a masterpiece, or compete with others to overwrite their drawings with your own!
+                You can collaborate with other users to make a masterpiece, 
+                <br>
+                or compete with others to overwrite their drawings with your own!
                 Have fun!
+            </div>
+            <div id="petr">
+                <img src="/static/images/PaintingPetr.png" width="200px" height="200px">
             </div>
         </div>
 
