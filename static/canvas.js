@@ -59,6 +59,7 @@ function drawPixel(context, x, y, color) {
     var roundedY = y * 20;
     context.fillStyle = color || '#000';
   	context.fillRect(roundedX, roundedY, 20, 20);
+    // redraw grid lines around newly colored pixel
     context.strokeStyle = "slategray";
     context.lineWidth = 0.35;
     context.strokeRect(roundedX, roundedY, 20, 20);
